@@ -16,8 +16,6 @@ import {
 import { linter } from "@codemirror/lint";
 import { json, jsonParseLinter } from "@codemirror/lang-json";
 
-let onChangeAction = new Compartment();
-
 export default function CodeMirror({ value, onChange = () => {} }) {
   const ref = useRef();
   const view = useRef();
@@ -77,23 +75,6 @@ export default function CodeMirror({ value, onChange = () => {} }) {
       }
     }
   }, [value, view]);
-
-  /**
-   * CodeMirror allow us to change the behavior of the editor on the fly
-   * that's why if the onChange props exist, then we affects the editor
-   * to add a new EditorView.updateListener functionality.
-   */
-  // useEffect(() => {
-  //   if (view.current && onChange) {
-  //     view.current.dispatch({
-  //       effects: onChangeAction.reconfigure(
-  //         EditorView.updateListener.of(view => {
-  //           if (view.docChanged) onChange({ target: { value: view.state.doc.toString() } })
-  //         })
-  //       )
-  //     })
-  //   }
-  // }, [view, onChange])
 
   return (
     <div style={{ height: "100%", backgroundColor: "white" }}>
